@@ -1,0 +1,201 @@
+---
+  output: word_document
+---
+
+Do sprawdzenia jakości klasyfikacji wykorzystamy kilka klasyfikatorów niezależnie, a następnie połączymy je w jeden klasyfikator tzw regresje stosową.
+
+Zestaw danych, z którego korzystamy ma następujące wymiary:
+```{r, echo=FALSE, warning=FALSE, error=F}
+setwd("~/Desktop/Biecek projekt/")
+library(MASS)
+
+load("metadata.rda")
+load('CountsCPM.rda')
+source("obliczenia_DE.R")
+load("wyniki_analizy_roznicowej.Rda")
+
+KTORE<-match(colnames(CountsCPM),metadata[,3])
+metadata<-metadata[KTORE,]
+ktore<-which(metadata[,6] %in% c('NA','SC','EB','ECTO','DE','MESO_5','MESO_15','MESO_30'))
+nazwy<-metadata[ktore,6]
+nazwy<- as.factor(as.character(nazwy))
+names(nazwy) <- metadata[ktore,3]
+levels(nazwy) <- levels(nazwy)[c(1,2,3,6,4,5,7,8)]
+dane<-CountsCPM[which(rowMeans(CountsCPM)>5),]
+```
+
+```{r}
+dim(dane)
+```
+
+Zestaw został ograniczony tylko do tych genów, których średnia ekspresja po wszystkich próbach jest większa niż 5.
+Zanim zajmiemy się klasyfikacją musimy wybrać cechy, które posłużą nam do uczenia klasyfikatora. W tym celu wykonaliśmy analizę różnicową z wykorzystaniem metody edgeR, która zakłada, że dane pochodzą z rozkładu ujemnego dwumianowego i wykorzystuje wersję dokładnego testu Fisher'a dostosowaną do zakładanego rozkładu.
+W ten sposób uzyskaliśmy listę genów różnicujących pomiędzy wszystkimi klasami.
+
+```{r}
+nrow(porownania[[1]][porownania[[1]]$padj<0.001,])
+```
+
+Efektywność klasyfikatorów prawdzaliśmy za pomocą k-krotnej walidacji krzyżowej, gdzie k=20. Pierwszym krokiem walidacji jest podział wszystkich prób na zbiór uczący i zbiór testowy. Do tego celu wykorzystujemy następującą funkcje:
+
+```{r}
+testing.set <- function(nazwy, k=0.2)
+{
+  ilosci <- table(nazwy)
+  udzial <- ceiling(ilosci*k)
+  klasy <- rownames(udzial)
+  testing.set <- sapply(klasy, function(x) {sample(which(nazwy==x), udzial[which(klasy==x)])})
+  training.set <- sapply(klasy, function(x) {setdiff(which(nazwy==x), testing.set[[x]])})
+  return(list(training.set, testing.set))
+}  
+```
+
+Jako, że w naszym zestawie jest 266 prób zdecydowaliśmy się ograniczyć listę cech do 100 najbardziej różnicujących genów, tak, aby klasyfikatory nie przeuczały się. Do przeprowadzenia walidacji krzyżowej używamy następującej funkcji:
+
+```{r, message=FALSE, warning=FALSE, error=FALSE, results="hide"}
+library(MLInterfaces)
+lko.cv <- function (nazwy, dane, k=0.2, porownania, f=100, klasyfikator="nnetI", size=5, decay=.01, ...)
+{
+  dane_k <- dane[porownania$edgeR$kolejnosc[1:f],] 
+  dane_k <- data.frame(t(dane_k),nazwy)
+  zbiory.danych <- testing.set(nazwy) 
+  training_set <- unlist(zbiory.danych[[1]])
+  if (klasyfikator=="nnetI") klasyfikator <- MLearn(nazwy~ ., data=dane_k, get(klasyfikator), training_set, 
+                                                    size=size, decay=decay) else 
+                             klasyfikator <- MLearn(nazwy~ ., data=dane_k, get(klasyfikator), training_set)
+  real <- nazwy[sort(names(nazwy[unlist(zbiory.danych[[2]])]))]
+  predicted <- testPredictions(klasyfikator)
+  return(table(real, predicted))
+}
+```
+
+
+Procentowe wartości błędów predykcji w każdej z grup z osobna prezentują się następująco:
+
+```{r, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results="hide"}
+bledy <- NULL
+for (j in c("naiveBayesI", "nnetI", "randomForestI", "svmI"))
+{
+  set.seed(123)
+  contingencies <- lapply(1:20, function(x) lko.cv(nazwy, dane, k=20, porownania, f=100, klasyfikator=j))
+
+# dolozenie pustej kolumny jak ktoras z kolumn nie wyszla w predykcji
+  for(i in 1:20)
+  {
+    if (ncol(contingencies[[i]])!=8)
+    {
+      a <- colnames(contingencies[[i]])
+      b <- setdiff(levels(nazwy), a)
+      contingencies[[i]] <- cbind(contingencies[[i]],matrix(0,8,length(b)))
+      colnames(contingencies[[i]]) <- c(a,b)
+      contingencies[[i]] <- contingencies[[i]][,sort(colnames(contingencies[[i]]))]
+    }
+  }
+
+  bledy <- rbind(bledy, 1-diag(Reduce("+", contingencies)/rowSums(Reduce("+",  contingencies))*1))
+}
+rownames(bledy) <- c('naiveBayesI', 'nnetI', 'randomForestI', 'svmI')
+```
+
+```{r, echo=FALSE}
+bledy
+```
+
+Jak widać błędy dla poszczególnych klasyfikatorów nie są satysfakcjonujące, dlatego kolejny krok to łączenie klasyfikatorów za pomocą regresji stosowej. Połączyliśmy tu klasyfikator 'naiveBayesI' i 'randomForestI' z pakietu MLInterfaces. Dla tego klasyfikatora przykładowe wyniki wyglądają następująco:
+
+
+```{r, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results="hide"}
+lko.cv.prob <- function (nazwy, dane, k=0.2, porownania, f=100, klasyfikator="nnetI", size=5, decay=.01, ...)
+{
+  dane_k <- dane[porownania$edgeR$kolejnosc[1:f],] 
+  dane_k <- data.frame(t(dane_k),nazwy)
+  zbiory.danych <- testing.set(nazwy) 
+  training_set <- unlist(zbiory.danych[[1]])
+  testing_set <- unlist(zbiory.danych[[2]])
+  if (klasyfikator=="nnetI") klasyfikator <- MLearn(nazwy~ ., data=dane_k, get(klasyfikator), training_set, 
+                                                    size=size, decay=decay) else 
+                                                      klasyfikator <- MLearn(nazwy~ ., data=dane_k, get(klasyfikator), training_set)
+  probabilities <- predict(klasyfikator, type="prob", newdata=dane_k[testing_set,], probability = TRUE)$testScores
+}
+
+
+set.seed(123)
+crossValidResult_80_20 <- list()
+cont <- list()
+for (r in 1:20)
+{
+
+  P<-cbind(lko.cv.prob(nazwy, dane, k=20, porownania, f=100, klasyfikator="naiveBayesI"), 
+           lko.cv.prob(nazwy, dane, k=20, porownania, f=100, klasyfikator="randomForestI"))
+  
+  match(rownames(P), names(nazwy))
+  
+  L <- nazwy[match(rownames(P), names(nazwy))]
+  
+  Moore_Penrose<-ginv(t(P)%*%P)
+  u<-list()
+  for(i in 1:8){
+    u[[i]]<-1:length(L)
+    u[[i]][which(as.numeric(L)==i)]<-1
+    u[[i]][which(as.numeric(L)!=i)]<-0
+  }
+  
+  Estymator_Beta<-list()
+  # Estymator u_k
+  estymator_u<-list()
+  
+  for(k in 1:8){   #k-ilosc klas
+    Estymator_Beta[[k]]<-Moore_Penrose%*%t(P)%*%u[[k]]
+    estymator_u[[k]]<-0
+  }
+  
+  
+  for(k in 1:8){
+    for(i in 1:dim(P)[1]){
+      estymator_u[[k]]<-c(estymator_u[[k]],sum(P[i,]*Estymator_Beta[[k]]))               #iloczyn skalarny wektorow
+    }
+    estymator_u[[k]]<-estymator_u[[k]][-1]
+    estymator_u[[k]][which(estymator_u[[k]]<0)]<-0
+    estymator_u[[k]][which(estymator_u[[k]]>1)]<-1
+  }
+  
+  # wyznaczanie prawdopodobienstw a posteriori dla klasyfikatora regresji stosowej
+  
+  p_aposteriori<-list()
+  for(k in 1:8){
+    p_aposteriori[[k]]<-numeric(length(L))
+    for(i in 1:dim(P)[1]){
+      p_aposteriori[[k]][i]<-estymator_u[[k]][i]/(estymator_u[[1]][i]+estymator_u[[2]][i]+estymator_u[[3]][i]+estymator_u[[4]][i]+estymator_u[[5]][i]+estymator_u[[6]][i]+estymator_u[[7]][i]+estymator_u[[8]][i])
+    }
+  }
+  
+  ilosc.prob <- length(L)
+  ilosc.klas <- 8
+  
+  tabela_kontyngencji<-matrix(,ilosc.prob,ilosc.klas+1)
+  
+  for(i in 1:length(L)){
+    tabela_kontyngencji[i,1:8]<-unlist(lapply(p_aposteriori, `[[`,i))
+    tabela_kontyngencji[i,9]<-ifelse(which.max(tabela_kontyngencji[i,])==as.numeric(L)[i],1,0)
+    crossValidResult_80_20[[r]] <- tabela_kontyngencji
+  }
+  colnames(crossValidResult_80_20[[r]]) <- c(levels(L), 'accuracy')
+  rownames(crossValidResult_80_20[[r]]) <- L
+  predicted <- numeric(length(L))
+  for (i in 1:length(L)) predicted[i] <- levels(L)[which.max(crossValidResult_80_20[[r]][i,1:8])]
+  cont[[r]] <- table(real=L, predicted)  
+  cont[[r]] <- cont[[r]][, c(1,2,3,6,4,5,7,8)]
+}
+```
+
+```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
+crossValidResult_80_20[[1]]
+cont[[1]]
+```
+
+Z kolei procentowa liczba błędów klasyfikacji dla każdej grupy osobno jest następująca:
+```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
+bledy <- 1-diag(Reduce("+", cont)/rowSums(Reduce("+", cont)))
+bledy
+c(bad = 56*20 - sum(diag(Reduce("+", cont))), good = sum(diag(Reduce("+", cont))))
+```

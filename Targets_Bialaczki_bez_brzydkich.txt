@@ -1,0 +1,138 @@
+FileName	Cy3	Cy5	podtyp bialaczki i faza choroby	Uwagi	Rzut	Jakosc szkie?ka
+0_szk15.gpr	HL60	control	brak	tylko szpik		
+0_szk120.gpr	HL60	control	brak	tylko szpik		
+01_szk16.gpr	HL60	control	brak	tylko szpik		
+01_szk121.gpr	HL60	control	brak	tylko szpik		
+8kr_szk122.gpr	HL60	bial	AML_M2_wznowa	tylko wznowa		
+8sz_szk123.gpr	HL60	bial	AML_M2_wznowa	tylko wznowa		
+12sz_szk157.gpr	HL60	bial	AML_M2		VI	b. ?adne
+14sz_szk14.gpr	HL60	bial	AML_M1			
+14sz_szk151.gpr	HL60	bial	AML_M1		VI	
+15kr_szk1.gpr	HL60	bial	AML_M2		II	b. ?adne
+15kr_szk31.gpr	HL60	bial	AML_M2	brak spików		
+15kr_szk90.gpr	HL60	bial	AML_M2			
+15kr_szk116.gpr	HL60	bial	AML_M2			
+15kr_szk152.gpr	HL60	bial	AML_M2		VI	
+15sz_szk10.gpr	HL60	bial	AML_M2		II	pi?kne
+15sz_szk85.gpr	HL60	bial	AML_M2			
+15sz_szk117.gpr	HL60	bial	AML_M2			
+16kr_szk11.gpr	HL60	bial	AML_M2	wyzszePMT	II	pi?kne
+16kr_szk32.gpr	HL60	bial	AML_M2	brak spików		
+16kr_szk83.gpr	HL60	bial	AML_M2			
+16kr_szk118.gpr	HL60	bial	AML_M2			
+16sz_szk2.gpr	HL60	bial	AML_M2		II	b. ?adne
+16sz_szk84.gpr	HL60	bial	AML_M2			
+17sz_szk7.gpr	HL60	bial	AML_M0			
+17sz_szk7p.gpr	HL60	bial	AML_M0	powtórka analizy z wyzszym PMT		
+18kr_szk8.gpr	HL60	bial	AML_M2_12_po_leczeniu	brak macierzy dla 12		
+19kr_szk11.gpr	HL60	bial	AML_M2			
+19kr_szk86.gpr	HL60	bial	AML_M2			
+19sz_szk19.gpr	HL60	bial	AML_M2		II 	pi?kne
+19sz_szk96.gpr	HL60	bial	AML_M2			
+20sz_szk9.gpr	HL60	bial	AML_M2_16_po_leczeniu		II	OK.
+22sz_szk18.gpr	HL60	bial	AML_M2_19_po_leczeniu		II	pi?kne
+23sz_szk65.gpr	HL60	bial	AML_M2_14_po_leczeniu			
+26kr_szk97.gpr	HL60	bial	AML_M2			
+26sz_szk13.gpr	HL60	bial	AML_M2		II	brzydkie t?o
+26sz_szk87.gpr	HL60	bial	AML_M2			
+27sz_szk14.gpr	HL60	bial	AML_M2_26_po_leczeniu		II	?rednie
+30kr_szk16.gpr	HL60	bial	AML_M1	nizszePMT	II	OK. tylko silne t?o 
+30kr_szk16p.gpr	HL60	bial	AML_M1	wyzszePMT	II	OK. tylko silne t?o 
+30kr_szk98.gpr	HL60	bial	AML_M1			
+30sz_szk17.gpr	HL60	bial	AML_M1	nizszePMT	II	OK. tylko silne t?o 
+30sz_szk17p.gpr	HL60	bial	AML_M1	wyzszePMT	II	OK. tylko silne t?o 
+30sz_szk99.gpr	HL60	bial	AML_M1			
+31kr_szk1.gpr	HL60	bial	AML_M2_wznowa	tylko wznowa		
+31sz_szk2.gpr	HL60	bial	AML_M2_wznowa			
+33kr_szk3.gpr	HL60	bial	AML_M2			
+33kr_szk9.gpr	HL60	bial	AML_M2			
+33kr_szk111.gpr	HL60	bial	AML_M2			
+33sz_szk4.gpr	HL60	bial	AML_M2			
+33sz_szk10.gpr	HL60	bial	AML_M2			
+33sz_szk18.gpr	HL60	bial	AML_M2	wyzszePMT		
+33sz_szk112.gpr	HL60	bial	AML_M2			
+34kr_szk20.gpr	HL60	bial	AML_M1	tylko krew	II	?adne
+34kr_szk66.gpr	HL60	bial	AML_M1	tylko krew		
+34kr_szk88.gpr	HL60	bial	AML_M1	tylko krew		
+35kr_szk6.gpr	HL60	bial	AML_M2		II	?adne
+35kr_szk95.gpr	HL60	bial	AML_M2			
+35sz_szk7.gpr	HL60	bial	AML_M2		II	b. ?adne
+35sz_szk106.gpr	HL60	bial	AML_M2			
+36kr_szk15.gpr	HL60	bial	AML_M2			
+36kr_szk67.gpr	HL60	bial	AML_M2			
+36kr_szk107.gpr	HL60	bial	AML_M2			
+36sz_szk68.gpr	HL60	bial	AML_M2			
+36sz_szk71.gpr	HL60	bial	AML_M2			
+36sz_szk108.gpr	HL60	bial	AML_M2			
+41kr_szk7.gpr	HL60	bial	AML_M2_mutETO			
+41kr_szk104.gpr	HL60	bial	AML_M2_mutETO			
+41sz_szk8.gpr	HL60	bial	AML_M2_mutETO			
+41sz_szk72.gpr	HL60	bial	AML_M2_mutETO			
+41sz_szk105.gpr	HL60	bial	AML_M2_mutETO			
+45kr_szk19.gpr	HL60	bial	AML_M2			
+45kr_szk33.gpr	HL60	bial	AML_M2	brak spików		
+45kr_szk102.gpr	HL60	bial	AML_M2			
+45kr_szk125.gpr	HL60	bial	AML_M2		V	dziura-?adne
+45kr_szk153.gpr	HL60	bial	AML_M2		VI	
+45kr_szk162.gpr	HL60	bial	AML_M2		VI	
+45kr_szk162p.gpr	HL60	bial	AML_M2		VI	
+45sz_szk34.gpr	HL60	bial	AML_M2	brak spików		
+45sz_szk100.gpr	HL60	bial	AML_M2			
+47sz_szk63.gpr	HL60	bial	AML_M2_15_wznowa			
+49kr_szk109.gpr	HL60	bial	AML_M2_mutETO			
+49sz_szk6.gpr	HL60	bial	AML_M2_mutETO			
+49sz_szk16.gpr	HL60	bial	AML_M2_mutETO			
+50kr_szk51.gpr	HL60	bial	AML_M2	nie wszystkie spiki (tylko mix II)		
+50kr_szk52.gpr	HL60	bial	AML_M2	nie wszystkie spiki (tylko mix II)		
+50kr_szk53_Cy.gpr	HL60	bial	AML_M2	Cyaniny zamiast Alex, nie wszystkie spiki (tylko mix II)		
+50kr_szk54.gpr	HL60	bial	AML_M2	nie wszystkie spiki (tylko mix II)		
+50kr_szk101.gpr	HL60	bial	AML_M2			
+50sz_szk55.gpr	HL60	bial	AML_M2			
+50sz_szk56.gpr	HL60	bial	AML_M2			
+50sz_szk103.gpr	HL60	bial	AML_M2			
+52sz_szk9.gpr	HL60	bial	AML_M2_16_wznowa			
+55kr_szk57.gpr	HL60	bial	AML_M1			
+55kr_szk81.gpr	HL60	bial	AML_M1			
+55sz_szk58.gpr	HL60	bial	AML_M1			
+55sz_szk161.gpr	HL60	bial	AML_M1		VI	
+56kr_szk128_man.gpr	HL60	bial	AML_M2	reczna hybr.		
+56sz_szk10.gpr	HL60	bial	AML_M2			
+56sz_szk129_man.gpr	HL60	bial	AML_M2	reczna hybr.		
+56sz_szk154.gpr	HL60	bial	AML_M2		VI	
+56sz_szk158.gpr	HL60	bial	AML_M2		VI	
+58kr_szk59.gpr	HL60	bial	AML_M1			
+58kr_szk160.gpr	HL60	bial	AML_M1		VI	
+58sz_szk60.gpr	HL60	bial	AML_M1			
+58sz_szk82.gpr	HL60	bial	AML_M1			
+58sz_szk159.gpr	HL60	bial	AML_M1		VI	
+60kr_szk126_man.gpr	HL60	bial	AML_M2_26_wznowa	reczna hybr.		
+60sz_szk127_man.gpr	HL60	bial	AML_M2_26_wznowa	reczna hybr.		
+61kr_szk61.gpr	HL60	bial	AML_M2			
+61kr_szk155.gpr	HL60	bial	AML_M2		VI	
+61sz_szk62.gpr	HL60	bial	AML_M2			
+61sz_szk156.gpr	HL60	bial	AML_M2		VI	
+62kr_szk130_man.gpr	HL60	bial	AML_M2	reczna hybr., kombinowana z innym HL60		
+62sz_szk64.gpr	HL60	bial	AML_M2_mutETO			
+64kr_szk145_man.gpr	HL60	bial	AML_M2_wznowa	reczna hybr., tylko wznowa		
+64sz_szk14.gpr	HL60	bial	AML_M2_wznowa	tylko wznowa		
+65kr_szk11.gpr	HL60	bial	AML_M2_49_po_leczeniu			
+65sz_szk12.gpr	HL60	bial	AML_M2_49_po_leczeniu			
+76kr_szk115.gpr	HL60	control	brak			
+K1_szk17.gpr	HL60	control	brak	tylko krew		
+K2_szk18.gpr	HL60	control	brak	tylko krew		
+K3_szk19.gpr	HL60	control	brak	tylko krew		
+K4_szk20.gpr	HL60	control	brak	tylko krew		
+K5_szk73.gpr	HL60	control	brak	tylko krew		
+K6_szk74.gpr	HL60	control	brak	tylko krew		
+K6_szk110p.gpr	HL60	control	brak	tylko krew		
+K6_szk110.gpr	HL60	control	brak	tylko krew		
+K7_szk75.gpr	HL60	control	brak	tylko krew		
+K8_szk76.gpr	HL60	control	brak	tylko krew		
+K9_szk77.gpr	HL60	control	brak	tylko krew		
+K10_szk78.gpr	HL60	control	brak	tylko krew		
+K11_szk79.gpr	HL60	control	brak	tylko krew		
+K12_szk80.gpr	HL60	control	brak	tylko krew		
+K13_szk113.gpr	HL60	control	brak	tylko krew		
+K14_szk114.gpr	HL60	control	brak	tylko krew		
+ML_szk13.gpr	HL60	control	brak	tylko krew		
+MLMK_szk119.gpr	HL60	control	brak	tylko krew		
